@@ -1,0 +1,24 @@
+<table class="table">
+    <thead>
+        <tr class="table-dark">
+            <th>Date/Time</th>
+            <th>Sender</th>
+            <th>Recipient</th>
+        </tr>
+    </thead>
+    <tbody>
+    [% FOREACH message IN messages.all %]
+        <tr class="table-secondary">
+            <td nowrap>
+                <a href="/data/message/[% message.data_message_id %]/view">[% message.datetime_received.strftime("%m/%d/%Y %H:%M:%S") %]</a>
+            <td>
+                <a href="/data/party/[% message.sender_id.data_party_id %]/view">[% message.sender_id.identifier %]</a>
+            <td>
+                <a href="/data/party/[% message.recipient_id.data_party_id %]/view">[% message.recipient_id.identifier %]</a>
+        <tr>
+            <td colspan=3>
+                [% message.message_contents |html %]
+        </tr>
+    [% END %]
+</table>
+

@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <tr>
+                <th class="table-dark">Date/Time</th>
+                <td>[% message.datetime_received.strftime("%m/%d/%Y %H:%M:%S") %]</td>
+            </tr>
+            <tr>
+                <th class="table-dark">Sender</th>
+                <td><a href="/data/party/[% message.sender_id.data_party_id %]/view">[% message.sender_id.identifier %]</a>
+            </tr>
+            <tr>
+                <th class="table-dark">Recipient</th>
+                <td><a href="/data/party/[% message.recipient_id.data_party_id %]/view">[% message.recipient_id.identifier %]</a>
+            </tr>
+            <tr>
+                <th class="table-dark" colspan=2">Message Body</th>
+            </tr>
+            <tr>
+                <td colspan=2>[% message.message_contents |html %]</td>
+            </tr>
+        </table>
+    </div>
+    [% IF message.data_position_id %]
+    <div class="col">
+        [% IF message.data_position_id.altitude %]
+        <h3><span class="badge bg-secondary">Altitude: [% message.data_position_id.altitude %]</span></h3>
+        [% END %]
+        [% IF message.data_position_id.speed %]
+        <h3><span class="badge bg-secondary">Speed: [% message.data_position_id.speed %]</span></h3>
+        [% END %]
+        <gmp-map center="[% message.data_position_id.latitude %],[% message.data_position_id.longitude %]" zoom="16" map-id="DEMO_MAP_ID" style="min-height: 500px;">
+          <gmp-advanced-marker position="[% message.data_position_id.latitude %],[% message.data_position_id.longitude %]" title="My location">
+          </gmp-advanced-marker>
+        </gmp-map>
+        <script async src="https://maps.googleapis.com/maps/api/js?key=[% c.config.google_maps_api_key %]&callback=console.debug&libraries=maps,marker&v=beta"></script>
+    </div>
+    [% END %]
+</div>

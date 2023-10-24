@@ -1,0 +1,33 @@
+[% IF messages %]
+<table class="table">
+    <thead>
+        <tr class="table-dark">
+            <th>Date/Time</th>
+            <th>Sender</th>
+            <th>Recipient</th>
+        </tr>
+    </thead>
+    <tbody>
+    [% FOREACH message IN messages.all %]
+        <tr class="table-secondary">
+            <td nowrap>
+                [% message.datetime_received.strftime("%m/%d/%Y %H:%M:%S") %]
+            <td>
+                [% message.sender %]
+            <td>
+                <a href="/data/party/[% message.recipient_id %]/view">[% message.recipient %]</a>
+        <tr>
+            <td colspan=3>
+                [% message.message_contents |html %]
+        </tr>
+    [% END %]
+</table>
+
+[% ELSE %]
+<form method="post" action="/data/search">
+
+<input type="text" name="q">
+<input type="submit">
+
+</form>
+[% END %]
